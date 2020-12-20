@@ -27,4 +27,3 @@ app.use('/orders', ordersRoutes);
 app.use('*', errors);
 
 export default app;
-
