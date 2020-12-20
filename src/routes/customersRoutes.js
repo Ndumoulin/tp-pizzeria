@@ -10,6 +10,7 @@ class CustomersRoutes {
     constructor() {
         router.get('/', this.getAll);
         router.get('/:idCustomer', this.getOne);
+        router.put('/:idCustomer', this.put);
         router.post('/', this.post);
     }
 
@@ -30,7 +31,7 @@ class CustomersRoutes {
             return next(err);
         }
     }
-
+  
     async getOne(req, res, next) {
         const idCustomer = req.params.idCustomer;
 
@@ -48,6 +49,21 @@ class CustomersRoutes {
         } catch (err) {
             return next(err);
         }
+    }
+    
+    async put(req, res, next) {
+        try {
+            let customerMod = await customersService.update(req.params.idCustomer, req.body);
+
+            if (!customerMod) {
+                return next(error.NotFound(`Le client avec l'identifiant ${req.params.idCustomer} est introuvable.`));
+            }
+
+            customerMod = customerMod.toObject({ virtuals: true });
+            customerMod = customersService.transform(customerMod);
+
+            res.status(200).json(customerMod);
+        } catch(err) {
     }
 
     async post(req, res, next) {
