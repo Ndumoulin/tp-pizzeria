@@ -2,20 +2,28 @@ import mongoose from 'mongoose';
 
 const orderSchema = Mongoose.Schema({
     pizzeria: {
-        // TODO: type: ,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Pizzeria',
         required: true
     },
     customer: {
-        // TODO: type: ,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Customer',
         required: true
     },
     orderDate: {
         type: Date,
         required: true
     },
-    pizzas : {
-        // TODO: size, price, toppings
-    }
+    pizzas: [
+        {
+            size: { type: String, required: true },
+            price: { type: Number },
+            toppings: [
+                { type: String, required: true }
+            ]
+        },
+    ]
 }, {
     collection: 'orders', id: false
 });
