@@ -9,7 +9,7 @@ const router = express.Router();
 class OrdersRoutes {
     constructor() {
         router.get('/', this.getAll);
-        router.get('/:idOrder', this.getOne);
+        router.get('/:idPizzeria/orders/:idOrder', this.getOne);
     }
 
     async getAll(req, res, next) {
@@ -31,19 +31,25 @@ class OrdersRoutes {
     }
 
     async getOne(req, res, next) {
-        const idOrder = req.params.idOrder;
+        const criteria = {
+            _id: req.params.idOrder,
+            pizzeria: req.params.idPizzeria
+        };
 
         try {
-            let order = await ordersService.retrieveById(idOrder);
+            let orders = await ordersService.retrieveByCriteria(criteria);
 
-            if (!order) {
-                return next(error.NotFound(`La commande avec l'identifiant ${idOrder} est introuvable.`));
+            if (!orders) {
+                return next(error.NotFound(`La commande avec l'identifiant ${req.params.idOrder} est introuvable.`));
             }
 
-            order = order.toObject({ virtuals: true });
-            order = ordersService.transform(order);
+            orders = orders.map((o) => {
+                o = o.toObject({ virtuals: true });
+                o = ordersService.transform(o);
+                return o;
+            });
 
-            res.status(200).json(order);
+            res.status(200).json(orders);
         } catch (err) {
             return next(err);
         }
