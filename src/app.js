@@ -23,6 +23,7 @@ app.get('/', (req, res, next) => {
 app.use('/pizzerias', pizzeriasRoutes);
 app.use('/customers', customersRoutes);
 app.use('/orders', ordersRoutes);
+app.use('/pizzerias', ordersRoutes);
 
 app.use('*', errors);
 

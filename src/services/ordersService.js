@@ -1,4 +1,6 @@
 import Order from '../models/order.js'
+import pizzeria from '../models/pizzeria.js';
+
 import mongoose from 'mongoose';
 
 class OrdersService {
@@ -10,10 +12,10 @@ class OrdersService {
         return Order.find(criteria);
     }
 
-    retrieveById(idOrder) {
+    retrieveByCriteria(criteria) {
         // TODO: validators
-        if (!mongoose.Types.ObjectId.isValid(idOrder)) return null;
-        return Order.findById(idOrder);
+        if (!mongoose.Types.ObjectId.isValid(criteria._id)) return null;
+        return Order.find(criteria);
     }
 
     ///////////////////////////////////////////////////////
