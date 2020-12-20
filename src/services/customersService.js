@@ -10,6 +10,14 @@ class CustomersService {
     }
 
     ///////////////////////////////////////////////////////
+    // UPDATE
+    //
+    update(idCustomer, customer) {
+        const filter = { _id: idCustomer };
+        return Customer.findOneAndUpdate(filter, customer, { new: true });
+    }
+
+    ///////////////////////////////////////////////////////
     // TRANSFORM
     //
     transform(customer, transformOption = {}) {

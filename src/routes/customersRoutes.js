@@ -9,6 +9,7 @@ const router = express.Router();
 class CustomersRoutes {
     constructor() {
         router.get('/', this.getAll);
+        router.put('/:idCustomer', this.put);
     }
 
     async getAll(req, res, next) {
@@ -25,6 +26,23 @@ class CustomersRoutes {
 
             res.status(200).json(customers);
         } catch (err) {
+            return next(err);
+        }
+    }
+    
+    async put(req, res, next) {
+        try {
+            let customerMod = await customersService.update(req.params.idCustomer, req.body);
+
+            if (!customerMod) {
+                return next(error.NotFound(`Le client avec l'identifiant ${req.params.idCustomer} est introuvable.`));
+            }
+
+            customerMod = customerMod.toObject({ virtuals: true });
+            customerMod = customersService.transform(customerMod);
+
+            res.status(200).json(customerMod);
+        } catch(err) {
             return next(err);
         }
     }
