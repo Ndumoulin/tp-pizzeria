@@ -9,6 +9,8 @@ const router = express.Router();
 class CustomersRoutes {
     constructor() {
         router.get('/', this.getAll);
+        router.get('/:idCustomer', this.getOne);
+        router.post('/', this.post);
     }
 
     async getAll(req, res, next) {
@@ -24,6 +26,49 @@ class CustomersRoutes {
             });
 
             res.status(200).json(customers);
+        } catch (err) {
+            return next(err);
+        }
+    }
+
+    async getOne(req, res, next) {
+        const idCustomer = req.params.idCustomer;
+
+        try {
+            let customer = await customersService.retrieveById(idCustomer);
+
+            if (!customer) {
+                return next(error.NotFound(`Le client avec l'identifiant ${idCustomer} est introuvable.`));
+            }
+
+            customer = customer.toObject({ virtuals: true });
+            customer = customersService.transform(customer);
+
+            res.status(200).json(customer);
+        } catch (err) {
+            return next(err);
+        }
+    }
+
+    async post(req, res, next) {
+        const newCustomer = req.body;
+        
+        try {
+            if (_.isEmpty(req.body)) {
+                return next(error.BadRequest());
+            }
+            
+            let customer = await customersService.create(newCustomer);
+
+            customer = customer.toObject({ virtuals: true });
+            customer = customersService.transform(customer);
+
+            res.header('Location', customer.href);
+            if (req.query._body === 'false') {
+                res.status(201).end();
+            } else {
+                res.status(201).json(customer);
+            }
         } catch (err) {
             return next(err);
         }
