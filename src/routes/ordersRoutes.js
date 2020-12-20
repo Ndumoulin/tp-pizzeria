@@ -8,8 +8,26 @@ const router = express.Router();
 
 class OrdersRoutes {
     constructor() {
+        router.get('/', this.getAll);
         router.get('/:idOrder', this.getOne);
+    }
 
+    async getAll(req, res, next) {
+        const criteria = {};
+
+        try {
+            let orders = await ordersService.retrieveAll(criteria);
+
+            orders = orders.map((o) => {
+                o = o.toObject({ virtuals: true });
+                o = ordersService.transform(o);
+                return o;
+            });
+
+            res.status(200).json(orders);
+        } catch (err) {
+            return next(err);
+        }
     }
 
     async getOne(req, res, next) {
@@ -30,8 +48,8 @@ class OrdersRoutes {
             return next(err);
         }
     }
-    
 }
 
-
+new OrdersRoutes();
+    
 export default router;
