@@ -40,7 +40,7 @@ class OrdersRoutes {
             let orders = await ordersService.retrieveByCriteria(criteria);
 
             if (!orders) {
-                return next(error.NotFound(`La commande avec l'identifiant ${req.params.idOrder} est introuvable.`));
+                return next(error.NotFound(`La commande avec l'identifiant '${req.params.idOrder}' est introuvable.`));
             }
 
             orders = orders.map((o) => {

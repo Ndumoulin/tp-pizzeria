@@ -39,7 +39,7 @@ class CustomersRoutes {
             let customer = await customersService.retrieveById(idCustomer);
 
             if (!customer) {
-                return next(error.NotFound(`Le client avec l'identifiant ${idCustomer} est introuvable.`));
+                return next(error.NotFound(`Le client avec l'identifiant '${idCustomer}' est introuvable.`));
             }
 
             customer = customer.toObject({ virtuals: true });
@@ -52,11 +52,13 @@ class CustomersRoutes {
     }
     
     async put(req, res, next) {
+        const idCustomer = req.params.idCustomer;
+
         try {
-            let customerMod = await customersService.update(req.params.idCustomer, req.body);
+            let customerMod = await customersService.update(idCustomer, req.body);
 
             if (!customerMod) {
-                return next(error.NotFound(`Le client avec l'identifiant ${req.params.idCustomer} est introuvable.`));
+                return next(error.NotFound(`Le client avec l'identifiant '${idCustomer}' est introuvable.`));
             }
 
             customerMod = customerMod.toObject({ virtuals: true });

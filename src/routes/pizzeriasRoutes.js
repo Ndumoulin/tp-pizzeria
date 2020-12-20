@@ -40,7 +40,7 @@ class PizzeriasRoutes {
             let pizzeria = await pizzeriasService.retrieveById(idPizzeria);
 
             if (!pizzeria) {
-                return next(error.NotFound(`La pizzeria avec l'identifiant ${idPizzeria} est introuvable.`));
+                return next(error.NotFound(`La pizzeria avec l'identifiant '${idPizzeria}' est introuvable.`));
             }
 
             pizzeria = pizzeria.toObject({ virtuals: true });
