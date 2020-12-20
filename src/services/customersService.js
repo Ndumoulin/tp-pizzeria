@@ -1,4 +1,5 @@
 import Customer from '../models/customer.js'
+import mongoose from 'mongoose'
 
 class CustomersService {
 
@@ -7,6 +8,18 @@ class CustomersService {
     //
     retrieveAll(criteria) {
         return Customer.find(criteria);
+    }
+
+    retrieveById(idCustomer) {
+        if (!mongoose.Types.ObjectId.isValid(idCustomer)) return null;
+        return Customer.findById(idCustomer);
+    }
+
+    ///////////////////////////////////////////////////////
+    // CREATE
+    //
+    create(customer) {
+        return Customer.create(customer);
     }
 
     ///////////////////////////////////////////////////////
