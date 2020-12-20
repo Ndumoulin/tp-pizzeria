@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const orderSchema = Mongoose.Schema({
+const orderSchema = mongoose.Schema({
     pizzeria: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Pizzeria',
