@@ -64,6 +64,8 @@ class CustomersRoutes {
 
             res.status(200).json(customerMod);
         } catch(err) {
+            return next(err);
+        }
     }
 
     async post(req, res, next) {
