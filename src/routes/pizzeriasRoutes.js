@@ -23,8 +23,6 @@ class PizzeriasRoutes {
             criteria = { 'chef.speciality': req.query.speciality };
         }
 
-        console.log(criteria);
-
         try {
             let pizzerias = await pizzeriasService.retrieveByCriteria(criteria);
 
