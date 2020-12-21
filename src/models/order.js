@@ -21,7 +21,8 @@ const orderSchema = mongoose.Schema({
             price: { type: Number },
             toppings: [
                 { type: String, required: true }
-            ]
+            ],
+            id: false
         },
     ]
 }, {
