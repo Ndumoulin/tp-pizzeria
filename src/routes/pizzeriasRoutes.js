@@ -20,7 +20,6 @@ class PizzeriasRoutes {
         let criteria = {};
 
         if (req.query.speciality) {
-            console.log(`Filter by '${req.query.speciality}'`);
             criteria = { 'chef.speciality': req.query.speciality };
         }
 
