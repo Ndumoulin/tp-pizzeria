@@ -84,7 +84,7 @@ class PizzeriasRoutes {
 
             res.header('Location', pizzeria.href);
             if (req.query._body === 'false') {
-                res.status(201).end();
+                res.status(204).end();
             } else {
                 res.status(201).json(pizzeria);
             }
