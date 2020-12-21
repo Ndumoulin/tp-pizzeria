@@ -35,7 +35,7 @@ class CustomersService {
     ///////////////////////////////////////////////////////
     // TRANSFORM
     //
-    transform(customer, transformOption = {}) {
+    transform(customer, transformOption = {}, options = {}) {
         if (transformOption) {
             // TODO: transformations
         }

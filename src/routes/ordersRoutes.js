@@ -12,6 +12,7 @@ class OrdersRoutes {
         router.get('/:idPizzeria/orders/:idOrder', this.getOne);
     }
 
+    // O1 - Obtenir toutes les commandes - Thomas Lessard
     async getAll(req, res, next) {
         const criteria = {};
 
@@ -30,6 +31,7 @@ class OrdersRoutes {
         }
     }
 
+    // O2 - Obtenir une commande spécifique d’une pizzeria - Nathan Dumoulin
     async getOne(req, res, next) {
         const criteria = {
             _id: req.params.idOrder,
