@@ -1,6 +1,5 @@
 import Customer from '../models/customer.js'
 
-import mongoose from 'mongoose'
 import dayjs from 'dayjs';
 
 class CustomersService {
@@ -8,12 +7,11 @@ class CustomersService {
     ///////////////////////////////////////////////////////
     // GET
     //
-    retrieveAll(criteria) {
+    retrieveByCriteria(criteria) {
         return Customer.find(criteria);
     }
 
     retrieveById(idCustomer) {
-        if (!mongoose.Types.ObjectId.isValid(idCustomer)) return null;
         return Customer.findById(idCustomer);
     }
 

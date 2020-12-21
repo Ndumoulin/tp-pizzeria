@@ -1,7 +1,5 @@
 import Order from '../models/order.js'
 
-import mongoose from 'mongoose';
-
 const TAXES_PERCENTAGE = 0.0087;
 
 class OrdersService {
@@ -9,13 +7,7 @@ class OrdersService {
     ///////////////////////////////////////////////////////
     // GET
     //
-    retrieveAll(criteria) {
-        return Order.find(criteria);
-    }
-
     retrieveByCriteria(criteria) {
-        // TODO: validators
-        if (!mongoose.Types.ObjectId.isValid(criteria._id)) return null;
         return Order.find(criteria);
     }
 
