@@ -1,5 +1,4 @@
 import Pizzeria from '../models/pizzeria.js'
-import mongoose from 'mongoose';
 
 import ordersService from '../services/ordersService.js';
 
@@ -8,13 +7,11 @@ class PizzeriasService {
     ///////////////////////////////////////////////////////
     // GET
     //
-    retrieveAll(criteria) {
+    retrieveByCriteria(criteria) {
         return Pizzeria.find(criteria);
     }
 
     retrieveById(idPizzeria, options) {
-        // TODO: validators
-        if (!mongoose.Types.ObjectId.isValid(idPizzeria)) return null;
         const query = Pizzeria.findById(idPizzeria);
 
         if (options.isOrdersEmbed) {
