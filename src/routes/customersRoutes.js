@@ -14,12 +14,14 @@ class CustomersRoutes {
         router.post('/', this.post);
     }
 
+    // TODO: Paramètres d'URL: page, limit, planet -> test 'Pualia'
+    // TODO: Middlewares: pagination, filtré croissant croissant customer.birthday
     // C3 - Obtenir tous les clients - Thomas Lessard
     async getAll(req, res, next) {
         const criteria = {};
 
         try {
-            let customers = await customersService.retrieveAll(criteria);
+            let customers = await customersService.retrieveByCriteria(criteria);
 
             customers = customers.map((c) => {
                 c = c.toObject({ virtuals: true });
@@ -67,7 +69,12 @@ class CustomersRoutes {
             customerMod = customerMod.toObject({ virtuals: true });
             customerMod = customersService.transform(customerMod);
 
-            res.status(200).json(customerMod);
+            res.header('Location', customer.href);
+            if (req.query._body === 'false') {
+                res.status(204).end();
+            } else {
+                res.status(201).json(customer);
+            }
         } catch(err) {
             return next(err);
         }
@@ -89,7 +96,7 @@ class CustomersRoutes {
 
             res.header('Location', customer.href);
             if (req.query._body === 'false') {
-                res.status(201).end();
+                res.status(204).end();
             } else {
                 res.status(201).json(customer);
             }

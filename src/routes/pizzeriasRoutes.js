@@ -26,7 +26,7 @@ class PizzeriasRoutes {
         }
 
         try {
-            let pizzerias = await pizzeriasService.retrieveAll(criteria);
+            let pizzerias = await pizzeriasService.retrieveByCriteria(criteria);
 
             pizzerias = pizzerias.map((p) => {
                 p = p.toObject({ virtuals: true });

@@ -12,12 +12,14 @@ class OrdersRoutes {
         router.get('/:idPizzeria/orders/:idOrder', this.getOne);
     }
 
+    // TODO: Paramètres d'URL: page, limit, topping -> test 'Jalapeño'
+    // TODO: Middlewares: pagination, filtré croissant croissant order.orderDate
     // O1 - Obtenir toutes les commandes - Thomas Lessard
     async getAll(req, res, next) {
         const criteria = {};
 
         try {
-            let orders = await ordersService.retrieveAll(criteria);
+            let orders = await ordersService.retrieveByCriteria(criteria);
 
             orders = orders.map((o) => {
                 o = o.toObject({ virtuals: true });
