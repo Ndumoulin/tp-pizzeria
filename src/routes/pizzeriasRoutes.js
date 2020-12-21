@@ -18,7 +18,7 @@ class PizzeriasRoutes {
     // P1 - Obtenir toutes les pizzerias - Nathan Dumoulin
     async getAll(req, res, next) {
         const criteria = {
-            toppings
+            
         };
 
         if(req.query.speciality) {
