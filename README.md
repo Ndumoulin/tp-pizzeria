@@ -3,8 +3,8 @@
 1945760 Nathan Dumoulin (Équipier B)
 
 Fait par Équipier A:
-    P2 - Obtenir une pizzeria spécifique
-    P3 - Ajouter une pizzeria
+    P2 - Obtenir une pizzeria spécifique - DONE
+    P3 - Ajouter une pizzeria // TODO: validation
     C2 - Mise à jour complète d’un client
     C3 - Obtenir tous les clients
     O1 - Obtenir toutes les commandes

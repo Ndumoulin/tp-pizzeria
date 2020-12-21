@@ -14,6 +14,7 @@ class CustomersRoutes {
         router.post('/', this.post);
     }
 
+    // C3 - Obtenir tous les clients - Thomas Lessard
     async getAll(req, res, next) {
         const criteria = {};
 
@@ -32,6 +33,7 @@ class CustomersRoutes {
         }
     }
   
+    // C4 - Obtenir un client spécifique - Nathan Dumoulin
     async getOne(req, res, next) {
         const idCustomer = req.params.idCustomer;
 
@@ -39,7 +41,7 @@ class CustomersRoutes {
             let customer = await customersService.retrieveById(idCustomer);
 
             if (!customer) {
-                return next(error.NotFound(`Le client avec l'identifiant ${idCustomer} est introuvable.`));
+                return next(error.NotFound(`Le client avec l'identifiant '${idCustomer}' est introuvable.`));
             }
 
             customer = customer.toObject({ virtuals: true });
@@ -51,12 +53,15 @@ class CustomersRoutes {
         }
     }
     
+    // C2 - Mise à jour complète d’un client - Thomas Lessard
     async put(req, res, next) {
+        const idCustomer = req.params.idCustomer;
+
         try {
-            let customerMod = await customersService.update(req.params.idCustomer, req.body);
+            let customerMod = await customersService.update(idCustomer, req.body);
 
             if (!customerMod) {
-                return next(error.NotFound(`Le client avec l'identifiant ${req.params.idCustomer} est introuvable.`));
+                return next(error.NotFound(`Le client avec l'identifiant '${idCustomer}' est introuvable.`));
             }
 
             customerMod = customerMod.toObject({ virtuals: true });
@@ -68,14 +73,15 @@ class CustomersRoutes {
         }
     }
 
+    // C1 - Ajouter un client - Nathan Dumoulin
     async post(req, res, next) {
         const newCustomer = req.body;
+
+        if (_.isEmpty(req.body)) {
+            return next(error.BadRequest());
+        }
         
         try {
-            if (_.isEmpty(req.body)) {
-                return next(error.BadRequest());
-            }
-            
             let customer = await customersService.create(newCustomer);
 
             customer = customer.toObject({ virtuals: true });

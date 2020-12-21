@@ -1,6 +1,8 @@
 import Pizzeria from '../models/pizzeria.js'
 import mongoose from 'mongoose';
 
+import ordersService from '../services/ordersService.js';
+
 class PizzeriasService {
 
     ///////////////////////////////////////////////////////
@@ -10,10 +12,16 @@ class PizzeriasService {
         return Pizzeria.find(criteria);
     }
 
-    retrieveById(idPizzeria) {
+    retrieveById(idPizzeria, options) {
         // TODO: validators
         if (!mongoose.Types.ObjectId.isValid(idPizzeria)) return null;
-        return Pizzeria.findById(idPizzeria);
+        const query = Pizzeria.findById(idPizzeria);
+
+        if (options.isOrdersEmbed) {
+            query.populate('orders');
+        }
+
+        return query;
     }
 
     ///////////////////////////////////////////////////////
@@ -26,12 +34,20 @@ class PizzeriasService {
     ///////////////////////////////////////////////////////
     // TRANSFORM
     //
-    transform(pizzeria, transformOption = {}) {
+    transform(pizzeria, transformOption = {}, options = {}) {
         if (transformOption) {
             // TODO: transformations
         }
 
+        if (options.isOrdersEmbed) {
+            pizzeria.orders = pizzeria.orders.map(p => {
+                p = ordersService.transform(p);
+                return p;
+            });
+        }
+
         pizzeria.href = `${process.env.BASE_URL}pizzerias/${pizzeria._id}`;
+        pizzeria.lightspeed = `[${pizzeria.planet}]@(${pizzeria.coord.lat};${pizzeria.coord.lon})`;
 
         delete pizzeria._id;
         delete pizzeria.__v;
