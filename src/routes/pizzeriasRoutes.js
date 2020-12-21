@@ -17,11 +17,14 @@ class PizzeriasRoutes {
     // TODO: Middlewares: pagination, filtré croissant chef.name
     // P1 - Obtenir toutes les pizzerias - Nathan Dumoulin
     async getAll(req, res, next) {
-        const criteria = {};
+        let criteria = {};
 
         if (req.query.speciality) {
-            criteria.speciality = req.query.speciality;
+            console.log(`Filter by '${req.query.speciality}'`);
+            criteria = { 'chef.speciality': req.query.speciality };
         }
+
+        console.log(criteria);
 
         try {
             let pizzerias = await pizzeriasService.retrieveByCriteria(criteria);
