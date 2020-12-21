@@ -17,7 +17,11 @@ class PizzeriasRoutes {
     // TODO: Middlewares: pagination, filtré croissant chef.name
     // P1 - Obtenir toutes les pizzerias - Nathan Dumoulin
     async getAll(req, res, next) {
-        const criteria = {};
+        let criteria = {};
+
+        if (req.query.speciality) {
+            criteria = { 'chef.speciality': req.query.speciality };
+        }
 
         try {
             let pizzerias = await pizzeriasService.retrieveByCriteria(criteria);
@@ -65,7 +69,7 @@ class PizzeriasRoutes {
     // P3 - Ajouter une pizzeria - Thomas Lessard
     async post(req, res, next) {
         const newPizzeria = req.body;
-        
+
         if (_.isEmpty(req.body)) {
             return next(error.BadRequest());
         }

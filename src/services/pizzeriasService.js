@@ -11,12 +11,6 @@ class PizzeriasService {
         return Pizzeria.find(criteria);
     }
 
-    retrieveByCriteria(criteria) {
-        // TODO: validators
-        if (!mongoose.Types.ObjectId.isValid(criteria._id)) return null;
-        return Pizzeria.find(criteria);
-    }
-
     retrieveById(idPizzeria, options) {
         const query = Pizzeria.findById(idPizzeria);
 
